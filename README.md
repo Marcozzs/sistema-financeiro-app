@@ -71,9 +71,12 @@ Processamento em background
 Gerenciamento de conexões com banco de dados
 Logs e auditoria
 Docker e Docker Compose
-Estrutura
-app/
 
+```markdown
+## Estrutura do projeto
+
+```text
+app/
 ├── routes/
 ├── services/
 ├── repositories/
@@ -82,6 +85,6 @@ app/
 ├── worker/
 └── main.py
 
-# Sobre o projeto:
-Esse projeto faz parte dos meus estudos de backend com Python.
-A ideia foi aplicar na prática conceitos que vão além de simplesmente criar endpoints, principalmente organização do código, separação das responsabilidades e processamento de tarefas em segundo plano.
+requirements.txt
+docker-compose.yml
+README.md
