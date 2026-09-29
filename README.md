@@ -33,6 +33,7 @@ O projeto foi construído seguindo uma separação estrita de responsabilidades 
 - Python instalado na máquina
 - Docker e Docker Compose configurados
 
+```bash
 ### 1. Subir a infraestrutura (Redis)
 Na raiz do projeto, inicie o container do Redis:
 docker-compose up -d
