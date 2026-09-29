@@ -74,8 +74,6 @@ Docker e Docker Compose
 
 ```markdown
 ## Estrutura do projeto
-
-```text
 app/
 ├── routes/
 ├── services/
