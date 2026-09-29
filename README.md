@@ -35,7 +35,6 @@ O projeto foi construído seguindo uma separação estrita de responsabilidades 
 
 ### 1. Subir a infraestrutura (Redis)
 Na raiz do projeto, inicie o container do Redis:
-```bash
 docker-compose up -d
 2. Configurar o ambiente virtual e dependências
 Crie e ative o ambiente virtual:
@@ -54,4 +53,3 @@ Acesse a documentação interativa em: http://localhost:8000/docs
 Em um segundo terminal (com o ambiente virtual ativo), execute o worker para processar as filas:
 Bash
 rq worker fila_relatorios
-```
