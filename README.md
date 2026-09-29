@@ -1,56 +1,90 @@
 # API de Relatórios Financeiros
 
-Projeto desenvolvido para consolidar a transição de scripts lineares para uma arquitetura de backend profissional em Python e FastAPI. O objetivo principal foi estruturar um sistema desacoplado, modular e preparado para lidar com processamento assíncrono de tarefas pesadas.
+Projeto desenvolvido em Python e FastAPI com o objetivo de praticar uma estrutura de backend mais organizada, saindo de scripts lineares e separando melhor as responsabilidades da aplicação.
+A API utiliza Redis e RQ para colocar tarefas mais pesadas em uma fila e processá-las em segundo plano através de um worker.
 
-## Decisões Arquiteturais
+- Arquitetura
+O projeto foi dividido em algumas camadas para evitar que toda a lógica fique concentrada nas rotas:
+- Routes: recebem as requisições HTTP e retornam as respostas.
+- Services: concentram as regras de negócio e as validações.
+- Repositories: responsáveis pelo acesso e persistência dos dados.
+- Database: gerenciamento das conexões com o banco de dados.
+- Utils: funções auxiliares, incluindo logs e auditoria.
+- Worker: responsável por executar as tarefas que foram colocadas na fila.
 
-O projeto foi construído seguindo uma separação estrita de responsabilidades entre as camadas:
+A ideia principal é manter cada parte da aplicação com uma responsabilidade específica, facilitando a manutenção e futuras alterações.
 
-- **Rotas (Routes):** Camada de entrada responsável exclusivamente por receber as requisições HTTP do cliente e retornar respostas rápidas.
-- **Serviços (Services):** Camada onde residem as regras de negócio e validações, delegando o processamento pesado para o sistema de filas.
-- **Repositórios (Repositories):** Camada responsável pela persistência e comunicação com a base de dados.
-- **Banco de Dados (Database):** Gestão centralizada de conexões utilizando gerenciadores de contexto (`contextlib`) para garantir o fechamento seguro de recursos e evitar vazamentos.
-- **Utuilitários (Utils):** Módulo centralizado de auditoria e logs estruturados para monitoramento das operações.
+Tecnologias
+- Python
+- FastAPI
+- Redis
+- RQ (Redis Queue)
+- Docker
+- Docker Compose
 
-## Tecnologias Utilizadas
+# Como funciona:
+O fluxo básico da geração de um relatório é:
+O cliente faz uma requisição para a API.
+A rota encaminha a operação para o service.
+O service realiza as validações necessárias e consulta os dados através do repository.
+A tarefa de geração do relatório é enviada para uma fila no Redis.
+A API retorna a resposta sem precisar esperar todo o processamento.
+O worker pega a tarefa da fila e executa o processamento em segundo plano.
 
-- **Python**
-- **FastAPI** (Construção da API e documentação automática via Swagger)
-- **Redis** (Message broker para gerenciamento de filas)
-- **RQ (Redis Queue)** (Background workers para processamento assíncrono)
-- **Docker e Docker Compose** (Isolamento e subida da infraestrutura)
+# Como executar:
+Pré-requisitos
+Python instalado
+Docker
+Docker Compose
 
-## Fluxo de Funcionamento
-
-1. O cliente faz uma requisição POST na rota de relatórios através da API.
-2. A camada de rotas aciona o serviço, que valida as regras de negócio consultando o repositório e o banco de dados de forma segura.
-3. O serviço despacha a tarefa de geração do relatório para a fila do Redis e retorna uma resposta de sucesso imediata para o cliente.
-4. Um worker em segundo plano consome a tarefa da fila, executando o processamento pesado de forma assíncrona sem impactar a performance da API.
-
-## Como Executar o Projeto
-
-### Pré-requisitos
-- Python instalado na máquina
-- Docker e Docker Compose configurados
-
-```bash
-### 1. Subir a infraestrutura (Redis)
-Na raiz do projeto, inicie o container do Redis:
+1. Iniciar o Redis
+Na raiz do projeto:
 docker-compose up -d
-2. Configurar o ambiente virtual e dependências
-Crie e ative o ambiente virtual:
-Bash
+2. Criar o ambiente virtual
 python3 -m venv venv
+No macOS/Linux:
 source venv/bin/activate
-Instale as dependências do projeto:
-Bash
+No Windows:
+venv\Scripts\activate
+3. Instalar as dependências
 pip install -r requirements.txt
-3. Iniciar a API
-Execute o servidor da aplicação a partir da raiz:
-Bash
+4. Iniciar a API
 python -m app.main
-Acesse a documentação interativa em: http://localhost:8000/docs
-4. Iniciar o Background Worker
-Em um segundo terminal (com o ambiente virtual ativo), execute o worker para processar as filas:
-Bash
+A API ficará disponível em:
+http://localhost:8000
+A documentação do FastAPI pode ser acessada em:
+http://localhost:8000/docs
+5. Iniciar o worker
+Em outro terminal, com o ambiente virtual ativado:
 rq worker fila_relatorios
+O worker ficará responsável por consumir as tarefas da fila e executar o processamento dos relatórios.
+
+
+# O que pratiquei neste projeto:
+Organização de projetos Python
+Arquitetura em camadas
+Separação de responsabilidades
+Desenvolvimento de APIs com FastAPI
+Redis
+Filas com RQ
+Processamento em background
+Gerenciamento de conexões com banco de dados
+Logs e auditoria
+Docker e Docker Compose
+Estrutura
+app/
+├── routes/
+├── services/
+├── repositories/
+├── database/
+├── utils/
+├── worker/
+└── main.py
+
+requirements.txt
+docker-compose.yml
+README.md
+
+# Sobre o projeto:
+Esse projeto faz parte dos meus estudos de backend com Python.
+A ideia foi aplicar na prática conceitos que vão além de simplesmente criar endpoints, principalmente organização do código, separação das responsabilidades e processamento de tarefas em segundo plano.
