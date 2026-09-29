@@ -22,7 +22,7 @@ Tecnologias
 - Docker
 - Docker Compose
 
-# Como funciona:
+## Como funciona:
 O fluxo básico da geração de um relatório é:
 O cliente faz uma requisição para a API.
 A rota encaminha a operação para o service.
@@ -31,7 +31,7 @@ A tarefa de geração do relatório é enviada para uma fila no Redis.
 A API retorna a resposta sem precisar esperar todo o processamento.
 O worker pega a tarefa da fila e executa o processamento em segundo plano.
 
-# Como executar:
+## Como executar:
 Pré-requisitos
 Python instalado
 Docker
@@ -60,16 +60,17 @@ rq worker fila_relatorios
 O worker ficará responsável por consumir as tarefas da fila e executar o processamento dos relatórios.
 
 
-# O que pratiquei neste projeto:
-Organização de projetos Python
-Arquitetura em camadas
-Separação de responsabilidades
-Desenvolvimento de APIs com FastAPI
-Redis
-Filas com RQ
-Processamento em background
-Gerenciamento de conexões com banco de dados
-Logs e auditoria
+## O que pratiquei neste projeto:
+
+Organização de projetos Python<br>
+Arquitetura em camadas<br>
+Separação de responsabilidades<br>
+Desenvolvimento de APIs com FastAPI<br>
+Redis<br>
+Filas com RQ<br>
+Processamento em background<br>
+Gerenciamento de conexões com banco de dados<br>
+Logs e auditoria<br>
 Docker e Docker Compose
 
 ```markdown
