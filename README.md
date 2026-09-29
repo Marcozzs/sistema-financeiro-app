@@ -73,6 +73,7 @@ Logs e auditoria
 Docker e Docker Compose
 Estrutura
 app/
+
 ├── routes/
 ├── services/
 ├── repositories/
@@ -80,10 +81,6 @@ app/
 ├── utils/
 ├── worker/
 └── main.py
-
-requirements.txt
-docker-compose.yml
-README.md
 
 # Sobre o projeto:
 Esse projeto faz parte dos meus estudos de backend com Python.
